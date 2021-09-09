@@ -31,9 +31,9 @@ with open(argv[1], 'r', encoding="utf-8") as file:
   contents = contents.replace("<ZR>","\n") # fix <ZR>  <ZR/>
 
   # writing tmp.xml for testing
-  print("Writing to tmp.xml (should now be valid xml)")
-  with open("tmp.xml", 'w') as tmp:
-    print(contents, file=tmp)
+  # print("Writing to tmp.xml (should now be valid xml)")
+  # with open("tmp.xml", 'w') as tmp:
+  #   print(contents, file=tmp)
 
 
   print("xml from string", file=sys.stderr)
