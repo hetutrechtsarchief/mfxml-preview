@@ -1,0 +1,44 @@
+<html>
+<head>
+  <link rel="stylesheet" href="lib/themes/default/style.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="lib/jstree.min.js"></script>
+  <style>
+    body {
+    font-family:verdana; 
+    font-size:11px; 
+    background: rgba(212, 230, 232, 0.48);
+  }
+  </style>
+</head>
+
+<body>
+<div id="tree">
+</div>
+
+<!--voorbeeld: http://localhost:5000/?data=data/preview1010.json -->
+<script>
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const params = Object.fromEntries(urlSearchParams.entries())
+
+  $(function() {
+    $('#tree').jstree({
+      "plugins" : ["state"],
+      'core' : {
+        'data' : {
+          "url" : params["data"],
+          "data" : function (node) {
+            return { "id" : node.id };
+          }
+        }
+      }
+    })
+  });
+
+  // ).on('loaded.jstree', function() {
+  //     $('#tree').jstree('open_all');
+  //   });
+</script>
+
+</body>
+</html>
