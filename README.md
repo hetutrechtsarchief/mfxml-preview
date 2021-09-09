@@ -9,4 +9,4 @@ Vervolgens kan het JSON bestand als boomstructuur worden bekeken in de browser.
 
 Start vervolgens een webserver bijv met `serve` en bekijk de boomstructuur in je browser via http://localhost:5000?data=data/34.4-2437.json
 
-![Screenshot](img/screenshot.png)
+<img width="500" src="img/screenshot.png">
