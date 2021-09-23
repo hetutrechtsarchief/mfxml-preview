@@ -2,7 +2,7 @@ def getTitel(ahd):
   # print(ahd)
   if ahd["AET"]=="NOTAKT":
     return getFlexVeld(ahd,["AKTENUMMER"]) + " " + getFlexVeld(ahd,["SOORTAKTE"])
-  elif ahd["AET"]=="PNNA":
+  elif ahd["AET"]=="PNNA" or ahd["AET"]=="PSN":
     return " ".join([
       getFlexVeld(ahd,["VOORNAAM"]),
       getFlexVeld(ahd,["TUSSENVOEGSEL"]),
