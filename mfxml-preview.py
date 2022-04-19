@@ -11,7 +11,7 @@ from utils import *
 latestAHD = None
 
 if len(argv)!=3:
-  sys.exit("Usage: "+argv[0]+" input_flexis.txt output_tree.json")
+  sys.exit("Usage: "+argv[0]+" input_flexis.txt output_tree.HTML")
 
 with open(argv[1], 'r', encoding="utf-8") as file:
   
@@ -93,15 +93,18 @@ with open(argv[1], 'r', encoding="utf-8") as file:
 ########################
 # code for Preview. creates a nested json file for jstree with 'icon' and 'text' added to each item
 
-  top = itemsByID["100000000"]
+  top = itemsByID["1"]
 
   tree(top) #traverse / recursive function starting at top
 
-  # save json for jstree
-  outputfilename = argv[2]
-  print(f"Writing to {outputfilename}")
-  with open(outputfilename, "w") as f:
-    json.dump(top, f, indent=4, ensure_ascii=False)
+  print('<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>')
+  print('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />')
+  print('<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>')
 
-  print("done", file=sys.stderr)
-  
+  print('<style>body { font-family:verdana; font-size:11px; background: rgba(212, 230, 232, 0.48); }</style>')
+  print(f"<button onclick=\"$('#tree').jstree('open_all');\">open alles</button>")
+  print(f"<button onclick=\"$('#tree').jstree('close_all');\">sluit alles</button>")
+  print('<div id="tree"></div>')
+  s = json.dumps({ "core": { "data": top }}, ensure_ascii=False) #"plugins" : [ "state" ]
+  print(f"<script>$('#tree').jstree({s});</script>")
+
