@@ -49,7 +49,7 @@ def getLabel(ahd):
 
 
 def tree(ahd): 
-  ahd["icon"] = "img/" + ahd["AET"].lower() + ".png"
+  ahd["icon"] = "https://word2mais.hualab.nl/img/" + ahd["AET"].lower() + ".png"
   ahd["text"] = getLabel(ahd)
 
   for item in ahd["children"]:
