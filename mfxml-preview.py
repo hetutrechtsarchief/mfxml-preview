@@ -10,8 +10,8 @@ from utils import *
 
 latestAHD = None
 
-if len(argv)!=3:
-  sys.exit("Usage: "+argv[0]+" input_flexis.txt output_tree.HTML")
+if len(argv)!=2:
+  sys.exit("Usage: "+argv[0]+" input.MFXML > output.HTML")
 
 with open(argv[1], 'r', encoding="utf-8") as file:
   
