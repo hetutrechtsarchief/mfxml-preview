@@ -10,8 +10,8 @@ from utils import *
 
 latestAHD = None
 
-if len(argv)!=2:
-  sys.exit("Usage: "+argv[0]+" input.MFXML > output.HTML")
+if len(argv)!=3:
+  sys.exit("Usage: "+argv[0]+" input.MFXML output.HTML")
 
 with open(argv[1], 'r', encoding="utf-8") as file:
   
@@ -30,10 +30,13 @@ with open(argv[1], 'r', encoding="utf-8") as file:
 
   contents = contents.replace("<ZR>","\n") # fix <ZR>  <ZR/>
 
+  contents = contents.replace("<BCURS>","[BCURS]")
+  contents = contents.replace("<ECURS>","[ECURS]")
+
   # writing tmp.xml for testing
-  # print("Writing to tmp.xml (should now be valid xml)")
-  # with open("tmp.xml", 'w') as tmp:
-  #   print(contents, file=tmp)
+  print("Writing to tmp.xml (should now be valid xml)")
+  with open("tmp.xml", 'w') as tmp:
+    print(contents, file=tmp)
 
 
   print("xml from string", file=sys.stderr)
@@ -97,14 +100,21 @@ with open(argv[1], 'r', encoding="utf-8") as file:
 
   tree(top) #traverse / recursive function starting at top
 
-  print('<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>')
-  print('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />')
-  print('<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>')
+  html_file = open(argv[2],'w')
 
-  print('<style>body { font-family:verdana; font-size:11px; background: rgba(212, 230, 232, 0.48); }</style>')
-  print(f"<button onclick=\"$('#tree').jstree('open_all');\">open alles</button>")
-  print(f"<button onclick=\"$('#tree').jstree('close_all');\">sluit alles</button>")
-  print('<div id="tree"></div>')
+  print('<meta charset="utf-8">',file=html_file)
+  print('<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>',file=html_file)
+  print('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />',file=html_file)
+  print('<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>',file=html_file)
+
+  print('<style>body { font-family:verdana; font-size:11px; background: rgba(212, 230, 232, 0.48); }</style>',file=html_file)
+  print(f"<button onclick=\"$('#tree').jstree('open_all');\">open alles</button>",file=html_file)
+  print(f"<button onclick=\"$('#tree').jstree('close_all');\">sluit alles</button>",file=html_file)
+  print('<div id="tree"></div>',file=html_file)
   s = json.dumps({ "core": { "data": top }}, ensure_ascii=False) #"plugins" : [ "state" ]
-  print(f"<script>$('#tree').jstree({s});</script>")
+
+  s = s.replace("[BCURS]","<em>")
+  s = s.replace("[ECURS]","</em>")
+
+  print(f"<script>$('#tree').jstree({s});</script>",file=html_file)
 

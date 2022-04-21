@@ -41,8 +41,9 @@ def getLabel(ahd):
 
   titel = getTitel(ahd)
   if label and titel:
-    label = label + ". "
+    label = label + " "
 
+  # print("xxx",label,type(label),type(titel),titel)
   label = label + titel #[0:100]
 
   return label
