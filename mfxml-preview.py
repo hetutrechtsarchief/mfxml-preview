@@ -22,22 +22,24 @@ with open(argv[1], 'r', encoding="utf-8") as file:
   # print(contents.find("<MFEXPORT"))
   # sys.exit()
 
+  contents = contents.replace("\ufeff","") # remove BOM
+
   if contents.find("<MFEXPORT")!=0: # if the string does not start with 
     contents = "<MFEXPORT>\n" +  contents
 
   contents = contents+"</MFEXPORT>" # add root tag
-  contents = contents.replace("&","&amp;") # fix &'s
-
+  contents = contents.replace("&","&amp;") # escape &
+  contents = contents.replace("<BCURS","&lt;BCURS") # escape <
+  contents = contents.replace("<ECURS","&lt;ECURS") # escape <
+  contents = re.sub(r"<(\d+)", r"&lt;\1", contents) # escape <1976 to &lt;1976
   contents = contents.replace("<ZR>","\n") # fix <ZR>  <ZR/>
-
-  contents = contents.replace("<BCURS>","[BCURS]")
-  contents = contents.replace("<ECURS>","[ECURS]")
 
   # writing tmp.xml for testing
   print("Writing to tmp.xml (should now be valid xml)")
   with open("tmp.xml", 'w') as tmp:
     print(contents, file=tmp)
 
+  # sys.exit()
 
   print("xml from string", file=sys.stderr)
   xml = ET.fromstring(contents)

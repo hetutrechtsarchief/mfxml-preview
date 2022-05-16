@@ -18,7 +18,7 @@ echo
 echo "MF-XML to JSON-tree..."
 ./mfxmlpreview.py $base.xml ${base}_preview.json
 
-echo
-echo "Done!"
-echo "http://localhost:5000?data=${base}_preview.json"
-echo
+# echo
+# echo "Done!"
+# echo "http://localhost:5000?data=${base}_preview.json"
+# echo
