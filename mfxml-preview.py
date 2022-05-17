@@ -78,12 +78,17 @@ with open(argv[1], 'r', encoding="utf-8") as file:
   print("creating preview", file=sys.stderr)
   od = xmltodict.parse(xmlstr) # OrderedDict
 
+  top_id = -1
 
   items = json.loads(json.dumps(od)) #convert OrderedDict to Dict
   itemsByID = {} # lookup table by ID
 
   for item in items["MFEXPORT"]["AHD"]: # AHD=[ {}, {}, {}]
     itemsByID[item["ID"]] = item
+
+    if top_id == -1:
+      top_id = item["ID"]
+
     item["children"] = [] # create child array for each item
 
   for item in items["MFEXPORT"]["AHD"]: # AHD=[ {}, {}, {}]
@@ -98,7 +103,9 @@ with open(argv[1], 'r', encoding="utf-8") as file:
 ########################
 # code for Preview. creates a nested json file for jstree with 'icon' and 'text' added to each item
 
-  top = itemsByID["1"]
+  # print(top_id)
+  # sys.exit(1)
+  top = itemsByID[top_id]
 
   tree(top) #traverse / recursive function starting at top
 
