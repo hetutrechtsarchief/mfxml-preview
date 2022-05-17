@@ -32,14 +32,28 @@ def getFlexVeld(ahd, names):
   return ""
 
 
-def getLabel(ahd):
-  label = ""
-  if "CODE" in ahd and ahd["CODE"]:
-    label = label + ahd["CODE"]
-  elif "NUMMER" in ahd and ahd["NUMMER"]:
-    label = label + ahd["NUMMER"]
+def getLabel(item):
+  if not "NUMMER" in item or not item["NUMMER"]:
+    item["NUMMER"] = ""
 
-  titel = getTitel(ahd)
+  if not "CODE" in item or not item["CODE"]:
+    item["CODE"] = ""
+
+  # for field in ["NUMMER","CODE"]:
+  #   if not field in item:
+  #     item[field] = item[field] or ""
+
+  label = "".join([item["NUMMER"],item["CODE"]])
+
+  if label and label[-1]!=".":
+    label += "."
+
+  # if "CODE" in item and item["CODE"]:
+  #   label = item["CODE"]
+  # elif "NUMMER" in item and item["NUMMER"]:
+  #   label = item["NUMMER"]
+
+  titel = getTitel(item)
   if label and titel:
     label = label + " "
 
